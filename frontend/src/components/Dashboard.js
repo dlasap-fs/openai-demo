@@ -1,41 +1,39 @@
 // Create a react functional component named Dashboard and export it
+// from the server using axios 
 import React, { useState } from 'react';
 import "./style.css";
 import {
   Button,
-  TablePagination,
   TableCell,
   TableBody,
   TableContainer,
   Table,
   TableHead,
   TableRow,
-  Paper,
-  TextField
+  Paper
 } from '@mui/material';
 import ModalView from './ModalView'
+// import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [btnAction, setBtnAction] = useState(true);
   const handleClose = () => setOpen(false);
-
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleOpen = () => setOpen(true);
   const openCreate = () => {
     setBtnAction(true);
     handleOpen();
   };
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  
+  // const handleReset = () => {
+  //   setContact({
+  //     first_name: '',
+  //     last_name: '',
+  //     physical_address: '',
+  //     billing_address: ''
+  //   })
+  // }
 
   return (
     <div>
@@ -75,28 +73,27 @@ const Dashboard = () => {
             <TableBody>
               {/* {listOfContact.length ? (
                 listOfContact
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((contact, i) => {
                     const {
-                      firstname,
-                      lastname,
-                      physicaladdress,
-                      billingaddress,
+                      first_name,
+                      last_name,
+                      physical_address,
+                      billing_address,
                       _id,
                     } = contact;
                     return (
                       <TableRow hover role="checkbox" key={i}>
                         <TableCell align="center" colSpan={2}>
-                          {firstname}
+                          {first_name}
                         </TableCell>
                         <TableCell align="center" colSpan={2}>
-                          {lastname}
+                          {last_name}
                         </TableCell>
                         <TableCell align="center" colSpan={3}>
-                          {physicaladdress}
+                          {physical_address}
                         </TableCell>
                         <TableCell align="center" colSpan={3}>
-                          {billingaddress}
+                          {billing_address}
                         </TableCell>
                         <TableCell align="center" colSpan={2}>
                           <span>
@@ -125,7 +122,7 @@ const Dashboard = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
+        {/* <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
           //   count={listOfContact.length}
@@ -133,7 +130,7 @@ const Dashboard = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        /> */}
       </Paper>
 
 

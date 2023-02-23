@@ -1,9 +1,9 @@
-// Create a react functional component named Modal and export itimport React from 'react';
+// Create a react functional component named Modal and export it import React from 'react';
 import React from 'react';
 import { Modal, Fade, Box, Typography, Button, TextField, Backdrop, Paper} from '@mui/material';
 import "./style.css";
 const ModalView = (props) => {
-  const { open, handleClose,btnAction } = props
+  const { open, handleClose,btnAction} = props
   const style = {
     position: "absolute",
     top: "50%",
@@ -44,12 +44,10 @@ const ModalView = (props) => {
                 id="standard-basic"
                 required
                 label="First Name"
-                name="firstname"
-                // value={firstname ?? ""}
+                name="first_name"
+                // value={first_name ?? ""}
                 variant="standard"
-              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              //   handleUserInput(e)
-              // }
+             
               />
             </Typography>
             <Typography
@@ -62,12 +60,10 @@ const ModalView = (props) => {
                 required
                 label="Last Name"
                 sx={{ width: 250 }}
-                name="lastname"
-                // value={lastname ?? ""}
+                name="last_name"
+                // value={last_name ?? ""}
                 variant="standard"
-              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              //   handleUserInput(e)
-              // }
+             
               />
             </Typography>
             <Typography
@@ -78,14 +74,12 @@ const ModalView = (props) => {
               <TextField
                 id="standard-basic"
                 sx={{ width: 250 }}
-                label="PhysicalAddress"
-                name="physicaladdress"
-                // value={physicaladdress ?? ""}
+                label="Physical Address"
+                name="physical_address"
+                // value={physical_address ?? ""}
                 variant="standard"
                 required
-              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              //   handleUserInput(e)
-              // }
+              
               />
             </Typography>
             <Typography
@@ -98,12 +92,10 @@ const ModalView = (props) => {
                 required
                 sx={{ width: 250 }}
                 label="Billing Address"
-                name="billingaddress"
-                // value={billingaddress ?? ""}
+                name="billing_address"
+                // value={billing_address ?? ""}
                 variant="standard"
-              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              //   handleUserInput(e)
-              // }
+              
               />
             </Typography>
             {btnAction ? (
@@ -130,3 +122,5 @@ const ModalView = (props) => {
   );
 };
 export default ModalView;
+
+// create an Express app that uses mongoDB to connect to the database 'contacts' which contains name, age, birthday, work_address, email, and contact number
