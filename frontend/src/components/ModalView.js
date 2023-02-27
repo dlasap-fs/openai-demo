@@ -3,7 +3,8 @@ import React from 'react';
 import { Modal, Fade, Box, Typography, Button, TextField, Backdrop, Paper} from '@mui/material';
 import "./style.css";
 const ModalView = (props) => {
-  const { open, handleClose,btnAction} = props
+  const { open, handleClose,btnAction, handleUserInput,handleAddContact,contact,handleUpdateContact} = props
+  const {first_name,last_name,billing_address,physical_address,_id} = contact
   const style = {
     position: "absolute",
     top: "50%",
@@ -45,8 +46,9 @@ const ModalView = (props) => {
                 required
                 label="First Name"
                 name="first_name"
-                // value={first_name ?? ""}
+                value={first_name ?? ""}
                 variant="standard"
+                onChange = {(event)=>handleUserInput(event)}
              
               />
             </Typography>
@@ -61,8 +63,9 @@ const ModalView = (props) => {
                 label="Last Name"
                 sx={{ width: 250 }}
                 name="last_name"
-                // value={last_name ?? ""}
+                value={last_name ?? ""}
                 variant="standard"
+                onChange = {(event)=>handleUserInput(event)}
              
               />
             </Typography>
@@ -76,9 +79,10 @@ const ModalView = (props) => {
                 sx={{ width: 250 }}
                 label="Physical Address"
                 name="physical_address"
-                // value={physical_address ?? ""}
+                value={physical_address ?? ""}
                 variant="standard"
                 required
+                onChange = {(event)=>handleUserInput(event)}
               
               />
             </Typography>
@@ -93,8 +97,9 @@ const ModalView = (props) => {
                 sx={{ width: 250 }}
                 label="Billing Address"
                 name="billing_address"
-                // value={billing_address ?? ""}
+                value={billing_address ?? ""}
                 variant="standard"
+                onChange = {(event)=>handleUserInput(event)}
               
               />
             </Typography>
@@ -102,7 +107,7 @@ const ModalView = (props) => {
               <Button
                 variant="contained"
                 sx={{ top: 10 }}
-              // onClick={handleAddContact}
+              onClick={handleAddContact}
               >
                 Add Contact
               </Button>
@@ -110,7 +115,7 @@ const ModalView = (props) => {
               <Button
                 variant="contained"
                 sx={{ top: 10 }}
-              // onClick={() => handleUpdateContact()}
+              onClick={() => handleUpdateContact(_id)}
               >
                 Update Contact
               </Button>

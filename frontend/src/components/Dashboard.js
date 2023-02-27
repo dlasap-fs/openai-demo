@@ -1,6 +1,5 @@
 // Create a react functional component named Dashboard and export it
-// from the server using axios 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./style.css";
 import {
   Button,
@@ -13,7 +12,10 @@ import {
   Paper
 } from '@mui/material';
 import ModalView from './ModalView'
-// import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import api from '../api'
+const base = 'http://localhost:4001/api'
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [btnAction, setBtnAction] = useState(true);
@@ -24,16 +26,88 @@ const Dashboard = () => {
     setBtnAction(true);
     handleOpen();
   };
+// Create an initial state for first_name, last_name, billing_address and physical_address
+let initialState = {
+  first_name: '',
+  last_name: '',
+  billing_address: '',
+  physical_address: ''
+};
+const [contact, setContact] = useState(initialState)
 
+const [contactList,setContactList] = useState([])
+  const handleReset = () => {
+    setContact({
+      first_name: '',
+      last_name: '',
+      physical_address: '',
+      billing_address: ''
+    })
+  }
+  // Create a function named handleUserInput with event parameter
   
-  // const handleReset = () => {
-  //   setContact({
-  //     first_name: '',
-  //     last_name: '',
-  //     physical_address: '',
-  //     billing_address: ''
-  //   })
-  // }
+
+const  handleUserInput=(event) =>{
+  // code to handle user input
+  setContact({...contact,[event.target.name]:event.target.value})
+}
+// Create a asynchronous function named handleGetAllContact that calls a get axios function
+const handleGetAllContacts = async () => {
+  try {
+    const response = await api.get(`${base}/getAllContacts`);
+    setContactList(response.data)
+  } catch (error) {
+    console.log(error);
+  }
+};
+// Create a asynchronous function named handleAddContact that calls a post axios function
+const handleAddContact = async () => {
+  try {
+    const response = await api.post(`${base}/add`, {contact});
+    setContactList([...contactList,response.data])
+    handleReset()
+    handleClose()
+  } catch (error) {
+    console.error(error);
+  }
+};
+// Create a asynchronous function named handleDeleteContact that calls a delete axios function
+const handleDeleteContact = async (id) => {
+  try {
+    await api.delete(`${base}/delete/${id}`);
+    const newContact = contactList.filter((i)=>{
+      console.log(i)
+      return i._id !== id
+    })
+    setContactList(newContact)
+  } catch (err) {
+    console.error(err);
+  }
+};
+const handleOpenUpdateModal = (id)=>{
+  const user = contactList.find((data)=>id === data._id)
+  setBtnAction(false);
+  setContact(user)
+  handleOpen()
+}
+//  Create a asynchronous function named handleUpdateContact that calls a put axios function
+const handleUpdateContact = async(contactId)=> {
+  try {
+await api.put(`${base}/update/${contactId}`, contact);
+    
+    handleReset()
+    handleClose()
+    handleGetAllContacts()
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+useEffect(()=>{
+  handleGetAllContacts()
+},[])
+
+
 
   return (
     <div>
@@ -47,6 +121,10 @@ const Dashboard = () => {
         handleClose={handleClose}
         open={open}
         btnAction={btnAction}
+        handleUserInput={handleUserInput}
+        contact={contact}
+        handleAddContact={handleAddContact}
+        handleUpdateContact={handleUpdateContact}
       />
       <Paper sx={{ maxWidth: 1000, margin: "auto", top: 500 }}>
         <TableContainer sx={{ maxHeight: 440 }}>
@@ -71,8 +149,8 @@ const Dashboard = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {listOfContact.length ? (
-                listOfContact
+              {contactList.length? (
+                contactList
                   .map((contact, i) => {
                     const {
                       first_name,
@@ -99,13 +177,13 @@ const Dashboard = () => {
                           <span>
                             <EditOutlinedIcon
                               style={{ color: "green" }}
-                              onClick={() => handleOpenToUpdate(_id)}
+                              onClick={() => handleOpenUpdateModal(_id)}
                             ></EditOutlinedIcon>
                           </span>
                           <span>
                             <DeleteOutlineOutlinedIcon
                               style={{ color: "red" }}
-                              onClick={() => handleClickedDeleteIcon(_id)}
+                              onClick={() => handleDeleteContact(_id)}
                             ></DeleteOutlineOutlinedIcon>
                           </span>
                         </TableCell>
@@ -118,7 +196,7 @@ const Dashboard = () => {
                     No Data Available
                   </TableCell>
                 </TableRow>
-              )} */}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
