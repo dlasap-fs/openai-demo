@@ -39,7 +39,7 @@ exports.updateContact = async (req, res) => {
     const updatedContact = await contactService.updateUserById(req.params.id, new_body);
     return res.json({ data: contact, msg: "Success" });
   } catch (error) {
-    console.error(err);
+    console.error(error);
     return res.status(500).json({ message: "Server Error" });
   }
 };
